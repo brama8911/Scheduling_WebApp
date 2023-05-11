@@ -1,6 +1,4 @@
-# CS50 Final Project: Work schedule manager
-
-## Video Demo:  <URL https://youtu.be/yqF26J09Dmg>
+# Work schedule manager
 
 ## Description:
 The work schedule manager is a Flask-app that facilitates resp. automates the creation of the monthly work schedule and distribution of tasks for my company, which works with a group of freelancers. As soon as a freelancer has been initialized in the database, they can register and later log in to the programme. 
