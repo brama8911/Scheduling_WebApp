@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dienstplan
+{% endblock %}
+
+{% block main %}
+
+    {% if imp == True and session['admin'] == True %}
+        <h2>CSV-Datei importieren</h2><br>
+        <form action="" method="post">
+            <input class="form-control mx-auto w-auto" type="text" name="import_file" placeholder="Dateinamen eingeben" autofocus><br>
+            <button type="submit" class="btn btn-primary btn-md" name="import_file">Importieren</button>
+        </form>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div><br>    
+                    {% for message in messages %}
+                        <strong>{{ message }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+    {% elif imp == True and session['admin'] == False %}
+        <h2>Noch keine Daten vorhanden!</h2>
+
+    {% else %}
+    <h2>Sendungen {{ current_month }}</h2>
+        {% if session["admin"] == True %}
+            <form action="" method="post">
+                <button type="submit" class="btn btn-secondary btn-md" name="make_schedule">Dienstplan generieren</button>
+                <button type="submit" class="btn btn-secondary btn-md" name="import">Sendungen importieren</button>
+                <button type="submit" class="btn btn-secondary btn-md" name="delete">Dienstplan löschen</button>
+            </form>
+        {% endif %}
+    <br>
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <th>Datum</th>
+            <th>Zeit</th>
+            <th>Minuten</th>
+            <th class="left">Sendung</th>
+            <th>Besetzung</th>
+            <th class="left">Programm</th>
+            <th>Region</th>
+            <th>Ort</th>
+            <th>Live</th>
+            <th class="left">Redakteur</th>
+            <th>Hash</th>
+        </thead>
+        <tbody>
+            {% for sendung in sendungen %}
+              <tr>
+                <td>{{ sendung.Datum }}</td>
+                <td>{{ sendung.Zeit }}</td>
+                <td>{{ sendung.Min }}</td>
+                <td class="left">{{ sendung.Titel }}</td>
+                <td>{% if sendung.Besetzung != None %} {{ sendung.Besetzung }}{% endif %}</td>
+                <td class="left">{{ sendung.Programm }}</td>
+                <td>{{ sendung.Region }}</td>
+                <td>{{ sendung.Ort }}</td>
+                <td>{{ sendung.Live }}</td>
+                <td class="left">{{ sendung.Redakteur }}</td>
+                <td>{% if sendung.Besetzung != None %} {{ sendung.Hash }}{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

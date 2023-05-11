@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Logout
+{% endblock %}
+
+{% block main %}
+    <h2>Sicher, dass du dich abmelden möchtest?</h2>
+    <form action="" method="post">
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 80px" name="yes">Ja</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 80px" name="no">Nein</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    User bearbeiten
+{% endblock %}
+
+{% block main %}
+    <h2>Das Audio2 Live-Team:</h2>
+    <br>
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <th>#</th>
+            <th>Kürzel</th>
+            <th>Name</th>
+            <th>Dienste/Woche</th>
+            <th>Telefonnummer</th>
+            <th>Admin</th>
+        </thead>
+        <tbody>
+            {% for person in team %}
+                {% if person.usr_update == 'True' %} 
+                    <tr>
+                        <form method="post">
+                            <td>{{ person.id }}</td>
+                            <td><input type="text" name="{{ person.handle }}_handle" value="{{ person.handle }}"></td>
+                            <td><input type="text" name="{{ person.handle }}_name" value="{{ person.name }}"></td>
+                            <td><input type="text" name="{{ person.handle }}_workload" value="{{ person.workload }}"></td>
+                            <td><input type="text" name="{{ person.handle }}_telefonnummer" value="{{ person.telefonnummer }}"></td>
+                            {% if person.admin == 'True' %}
+                                <td><input class="form-check-input" name="{{ person.handle }}_admin" type="checkbox" id="flexCheckDefault" checked></td>
+                            {% else %}
+                                <td><input class="form-check-input" name="{{ person.handle }}_admin" type="checkbox" id="flexCheckDefault"></td>
+                            {% endif %}
+                            <td><button type="submit" class="btn btn-secondary btn-sm" name="speichern_{{ person.handle }}">Speichern</button></td>
+                        </form>
+                    </tr>
+                {% else %}
+                <tr>
+                    <td>{{ person.id }}</td>
+                    <td>{{ person.handle }}</td>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.workload }}</td>
+                    <td>{{ person.telefonnummer }}</td>
+                    {% if person.admin == 'True' %}
+                        <td><input disabled class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked></td>
+                    {% else %}
+                        <td><input disabled class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+                    {% endif %}
+                    <td></td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

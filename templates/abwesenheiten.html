@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Abwesenheiten
+{% endblock %}
+
+{% block main %}
+    <h2>Abwesenheiten {{ next_month }}</h2>
+    <button type="submit" name="import">Abwesenheiten importieren</button>
+    <br>
+    <table class="table table-sm table-striped table-hover" id="table-abw">
+        <thead>
+            <th class="sticky-col"></th>
+            {% for day in range(daynum) %}
+                <th>{{ day + 1 }}</th>
+            {% endfor %}
+        </thead>
+        <tbody>
+            <form action="" method="post">  
+                {% for person in team %}
+                <tr>
+                    <td class="sticky-col">
+                        {{ person.handle }}
+                    </td>  
+                    {% for day in range(daynum) %}
+                        <td>
+                            {% if session["admin"] == False %}
+                                
+                                {% if person.handle == session["user_handle"] %}
+                                    {% if abw[person['handle']][day] %}
+                                        <input type="text" name="{{ day + (person.id-1) * daynum }}" value="{{ abw[person['handle']][day] }}" size=2 style="text-align:center" autocomplete="off">
+                                    {% else %}
+                                        <input type="text" name="{{ day + (person.id-1) * daynum }}" placeholder="" size=2 style="text-align:center" autocomplete="off">
+                                    {% endif %}
+                                    <input type="submit" hidden>
+
+                                {% elif abw[person['handle']][day] %}
+                                    <input disabled type="text" name="{{ day + (person.id-1) * daynum }}" value="{{ abw[person['handle']][day] }}" size=2 style="text-align:center">
+                                {% else %}
+                                    <input disabled type="text" name="{{ day + (person.id-1) * daynum }}" placeholder="" size=2 style="text-align:center">
+                                {% endif %}
+
+                            {% elif session["admin"] == True %}
+                                {% if abw[person['handle']][day] %}
+                                    <input type="text" name="{{ day + (person.id-1) * daynum }}" value="{{ abw[person['handle']][day] }}" size=2 style="text-align:center" autocomplete="off">
+                                {% else %}
+                                    <input type="text" name="{{ day + (person.id-1) * daynum }}" placeholder="" size=2 style="text-align:center" autocomplete="off">
+                                {% endif %}
+                                <input type="submit" hidden>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </form>
+        </tbody>
+    </table>
+{% endblock %}

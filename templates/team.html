@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Team
+{% endblock %}
+
+{% block main %}
+    <h2>Das Live-Team:</h2>
+    {% if session["admin"] == True %}
+        <form method="post">
+            <button type="submit" class="btn btn-secondary btn-md" name="new-user">Neuen User anlegen</button>
+        </form>
+    {% endif %}
+    <br>
+        <table class="table table-sm table-striped table-hover">
+        <thead>
+            <th>#</th>
+            <th>Kürzel</th>
+            <th class="left">Name</th>
+            <th>Dienste/Woche</th>
+            <th>Telefonnummer</th>
+            <th>E-Mail</th>
+            {% if session["admin"] == True %}
+                <th>Admin</th>
+            {% endif %}
+        </thead>
+        <tbody>
+            {% for person in team %}
+                <tr>
+                    <td>{{ person.id }}</td>
+                    <td>{{ person.handle }}</td>
+                    <td class="left">{{ person.name }}</td>
+                    <td>{{ person.workload }}</td>
+                    <td>{{ person.telefonnummer }}</td>
+                    <td>{{ person.email }}</td>
+
+                    {% if session["admin"] == True %}
+                        {% if person.admin == 'True' %}
+                            <td><input disabled class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked></td>
+                        {% else %}
+                            <td><input disabled class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+                        {% endif %}
+                        <form action="" method="post">
+                            <td><button type="submit" class="btn btn-secondary btn-sm" name="{{ person.handle }}_update">User bearbeiten</button></td>
+                        </form>
+                        <form action="" method="post"  onsubmit="return confirm('{{ person.name }} endgültig löschen?');">
+                            <td><button type="submit" class="btn btn-secondary btn-sm" name="{{ person.handle }}_delete">User löschen</button></td>
+                        </form>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stats
+{% endblock %}
+
+{% block main %}
+    <h2>Dienstplan Auswertung</h2>
+    <br>
+    <h5>Abweichung: {{ absolute | round }}</h5>
+    <div>Dienste gesamt: {{ dienste['total'] }}</div>
+    <div>Dienste gewollt: {{ dienste['gewollt'] | round }}</div><br>
+
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <th>Handle</th>
+            <th>Wunschdienstzahl</th>
+            <th>Dienstzahl tats.</th>
+            <th>+</th>
+            <th>-</th>
+            <th>Minuten/Dienst</th>
+            <th>Geld/Dienst</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for person in team %}
+                <tr>
+                    <td>{{ person.handle }}</td>
+                    <td>{{ (person.workload / 7 * daynum) | int }}</td>
+                    <td>{{ dienste[person.handle] }}</td>
+                    <td>{% if (person.workload / 7 * daynum | int) < dienste[person.handle] %}
+                        {{  (dienste[person.handle] - (person.workload / 7 * daynum) | int) }} {% endif %}</td>
+                    <td>{% if (person.workload / 7 * daynum | int) > dienste[person.handle] %}
+                        {{ (dienste[person.handle] - (person.workload / 7 * daynum) | int) }} {% endif %}</td>
+                    <td>{{ min_per_day[person.handle] }}</td>
+                    <td>{% if min_per_day[person.handle] %}{{ min_per_day[person.handle] * 2.26 | round }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

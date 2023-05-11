@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Start
+{% endblock %}
+
+{% block main %}
+    {% if sendungen %}    
+        <h2>Meine Dienste</h2>
+
+        <table class="table table-sm table-striped table-hover">
+            <thead>
+                <th>Datum</th>
+                <th>Zeit</th>
+                <th>Minuten</th>
+                <th class="left">Sendung</th>
+                <th>Besetzung</th>
+                <th class="left">Programm</th>
+                <th>Region</th>
+                <th>Ort</th>
+                <th>Live</th>
+                <th class="left">Redakteur</th>
+                <th>Hash</th>
+            </thead>
+            <tbody>
+                {% for sendung in sendungen %}
+                <tr>
+                    <td>{{ sendung.Datum }}</td>
+                    <td>{{ sendung.Zeit }}</td>
+                    <td>{{ sendung.Min }}</td>
+                    <td class="left">{{ sendung.Titel }}</td>
+                    <td>{% if sendung.Besetzung != None %} {{ sendung.Besetzung }}{% endif %}</td>
+                    <td class="left">{{ sendung.Programm }}</td>
+                    <td>{{ sendung.Region }}</td>
+                    <td>{{ sendung.Ort }}</td>
+                    <td>{{ sendung.Live }}</td>
+                    <td class="left">{{ sendung.Redakteur }}</td>
+                    <td>{% if sendung.Besetzung != None %} {{ sendung.Hash }}{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>Hallo, {{ session['user_name'] }}!</h2>
+        <img class="logo" src="static/logo.png">
+        <p><strong>Noch keine Dienste für diesen Monat...</strong></p>
+    {% endif %}
+{% endblock %} 

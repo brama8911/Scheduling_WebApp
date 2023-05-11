@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    User anlegen
+{% endblock %}
+
+{% block main %}
+    <h2>Bitte Userdaten eingeben:</h2>
+    <br>
+    
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <th>#</th>
+            <th>Kürzel</th>
+            <th>Name</th>
+            <th>Dienste/Woche</th>
+            <th>Telefonnummer</th>
+            <th>E-Mail</th>
+        </thead>
+        <tbody>
+            <form action="" method="post">
+                <tr>
+                    <td></td>
+                    <td><input type="text" name="handle" placeholder="Kürzel" autocomplete="off"></td>
+                    <td><input type="text" name="name" placeholder="Name" autocomplete="off"></td>
+                    <td><input type="text" name="workload" placeholder="Dienste/Woche" autocomplete="off"></td>
+                    <td><input type="text" name="telephone" placeholder="Telefonnummer" autocomplete="off"></td>
+                    <td><input type="text" name="e-mail" placeholder="E-Mail-Adresse" autocomplete="off"></td>
+                    <td><button type="submit" class="btn btn-secondary btn-sm" name="create-user">User anlegen</button></td>
+                </tr>
+            </form>
+        </tbody>
+    </table>
+{% endblock %}
